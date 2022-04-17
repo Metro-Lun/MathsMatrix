@@ -1,27 +1,4 @@
 import random
-
-"""FUNCTIONS"""
-
-def sum(A,B) :
-    if A.lines == B.lines and A.cols == B.cols :
-        C = Matrix(A.lines,A.cols)
-        for i in range(len(C.mat)) :
-            for j in range(len(C.mat[i])) :
-                C.mat[i][j] = A.mat[i][j] + B.mat[i][j]
-        return C
-    else :
-        return "The matrices do not have the same dimensions."
-
-def s_product(A,val) :      # product of a matrix and a scalar
-    C = A
-    for i in range(len(A.mat)) :
-            for j in range(len(A.mat[i])) :
-                C.mat[i][j] = C.mat[i][j]*val
-    return C
-
-
-"""CLASS"""
-
 class Matrix :
 
     def __init__(self, lines=1, columns=1) :
@@ -38,6 +15,24 @@ class Matrix :
                 ch += "\n"
         return ch
         
+    def __add__(self,other) :
+        if self.lines == other.lines and self.cols == other.cols :
+            sum = Matrix(self.lines,self.cols)
+            for i in range(len(sum.mat)) :
+                for j in range(len(sum.mat[i])) :
+                    sum.mat[i][j] = self.mat[i][j] + other.mat[i][j]
+            return sum
+        else :
+            return "The matrices do not have the same dimensions."
+
+    def __mul__(self,other) :
+        if type(other) == int :     # product of a matrix and a scalar
+            prdt = self
+            for i in range(len(self.mat)) :
+                for j in range(len(self.mat[i])) :
+                    prdt.mat[i][j] = prdt.mat[i][j]*other
+            return prdt
+    
     def fill(self, val) :     # changes all values to the same one
         for i in range(len(self.mat)) :
             for j in range(len(self.mat[i])) :
