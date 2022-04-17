@@ -98,9 +98,3 @@ class Matrix :
             for j in range(len(self.mat[i])) :
                 tr.mat[j][i] = self.mat[i][j]
         return tr
-
-A = Matrix(2,3)
-A.random_fill()
-B = Matrix(2,3)
-B.random_fill()
-print(A+2)
