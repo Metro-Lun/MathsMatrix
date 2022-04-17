@@ -16,14 +16,16 @@ class Matrix :
         return ch
         
     def __add__(self,other) :
-        if self.lines == other.lines and self.cols == other.cols :
-            sum = Matrix(self.lines,self.cols)
-            for i in range(len(sum.mat)) :
-                for j in range(len(sum.mat[i])) :
-                    sum.mat[i][j] = self.mat[i][j] + other.mat[i][j]
-            return sum
-        else :
-            return "The matrices do not have the same dimensions."
+        if type(other) != int :
+            if self.lines == other.lines and self.cols == other.cols :
+                sum = Matrix(self.lines,self.cols)
+                for i in range(len(sum.mat)) :
+                    for j in range(len(sum.mat[i])) :
+                        sum.mat[i][j] = self.mat[i][j] + other.mat[i][j]
+                return sum
+            else :
+                return "The matrices do not have the same dimensions."
+        else : raise TypeError(f"Can't add {type(self)} and {type(other)}.")
 
     def __mul__(self,other) :
         if type(other) == int :     # product of a matrix and a scalar
@@ -32,6 +34,19 @@ class Matrix :
                 for j in range(len(self.mat[i])) :
                     prdt.mat[i][j] = prdt.mat[i][j]*other
             return prdt
+        
+        elif type(other) == Matrix :       # product of two matrices
+            if self.lines == other.cols :
+                res = Matrix(self.lines,other.cols)
+                for a in range(len(self.mat)) :
+                    for c in range(len(other.mat[0])) :
+                        prdt = 0
+                        for b in range(len(self.mat[0])) :
+                            prdt += self.mat[a][b] * other.mat[b][c]
+                        res.mat[a][c] = prdt
+                        
+                return res
+            else : raise ValueError("These matrices can't be multiplied.")
     
     def fill(self, val) :     # changes all values to the same one
         for i in range(len(self.mat)) :
@@ -64,10 +79,9 @@ class Matrix :
             A1.mat[1][1] = temp
 
             coef = round(1/self.det(),3)
-            A2 = s_product(A1,coef)
+            A2 = A1*coef
             return A2
-        else :
-            return "The matrix is not invertible."
+        else : raise ValueError("This matrix is not invertible.")
 
     def is_identity(self) :     # bool
         for i in range(len(self.mat)) :
@@ -77,3 +91,16 @@ class Matrix :
                 if i == j :
                     if self.mat[i][j] != 1 : return False
         return True
+
+    def transpose(self) :
+        tr = Matrix(self.cols,self.lines)
+        for i in range(len(self.mat)) :
+            for j in range(len(self.mat[i])) :
+                tr.mat[j][i] = self.mat[i][j]
+        return tr
+
+A = Matrix(2,3)
+A.random_fill()
+B = Matrix(2,3)
+B.random_fill()
+print(A+2)
