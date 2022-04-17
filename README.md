@@ -21,11 +21,12 @@ The things you can currently do with this implementation:
 * Change a single value in the matrix
 * Change all values to a specific number
 * Randomize the values
+* Determine if a matrix is the Identity matrix
 
-### Matrix inversibility
-* Calculate the determinant of a 2x2 matrix
-* Determine if a 2x2 matrix is invertible or not
-
-### Matrix operations
+### Matrix inversibility (for 2x2 matrices only)
+* Calculate the determinant of a matrix
+* Determine if a matrix is invertible or not
+* Determine a matrix's inverse
+### Matrix operations 
 * Sum of two matrices
 * Product of a number and a matrix
