@@ -16,26 +16,25 @@ class Matrix :
         return ch
         
     def __add__(self,other) :
-        if type(other) != int :
+        if isinstance(Matrix,other) :       # you can only add two matrices, not a matrix and a number
             if self.lines == other.lines and self.cols == other.cols :
                 sum = Matrix(self.lines,self.cols)
                 for i in range(len(sum.mat)) :
                     for j in range(len(sum.mat[i])) :
                         sum.mat[i][j] = self.mat[i][j] + other.mat[i][j]
                 return sum
-            else :
-                return "The matrices do not have the same dimensions."
+            else : raise ValueError("The matrices do not have the same dimensions.")
         else : raise TypeError(f"Can't add {type(self)} and {type(other)}.")
 
     def __mul__(self,other) :
-        if type(other) == int :     # product of a matrix and a scalar
+        if isinstance(int,other) :     # product of a matrix and a scalar
             prdt = self
             for i in range(len(self.mat)) :
                 for j in range(len(self.mat[i])) :
                     prdt.mat[i][j] = prdt.mat[i][j]*other
             return prdt
         
-        elif type(other) == Matrix :       # product of two matrices
+        elif isinstance(Matrix,other) :       # product of two matrices
             if self.lines == other.cols :
                 res = Matrix(self.lines,other.cols)
                 for a in range(len(self.mat)) :
@@ -47,6 +46,8 @@ class Matrix :
                         
                 return res
             else : raise ValueError("These matrices can't be multiplied.")
+
+        else : raise TypeError(f"Can't add {type(self)} and {type(other)}.")
     
     def fill(self, val) :     # changes all values to the same one
         for i in range(len(self.mat)) :
@@ -72,7 +73,7 @@ class Matrix :
             A1 = Matrix(self.lines,self.cols)
             A2 = Matrix(self.lines,self.cols)
             
-            temp = self.mat[0][0]
+            temp = self.mat[0][0]       # because A**-1 = 1/det(A) * [[d -b][-c a]]
             A1.mat[0][0] = self.mat[1][1]
             A1.mat[0][1] = -self.mat[0][1]
             A1.mat[1][0] = -self.mat[1][0]
