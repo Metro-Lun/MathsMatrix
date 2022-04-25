@@ -31,3 +31,5 @@ The things you can currently do with this implementation:
 * Product of a number and a matrix
 * Product of two matrices
 * Transpose of a matrix
+## License
+Distributed under the **LGPL-3.0 License**. See [license](LICENSE) for more information.
